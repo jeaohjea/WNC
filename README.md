@@ -1,6 +1,6 @@
 # wnc_finder
 
-A new Flutter project.
+WNC is Warkop N Cafe Finder. Its Android app who can search warkop and cafe nearby your location.
 
 ## Getting Started
 

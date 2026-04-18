@@ -98,20 +98,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
   }
 
-  Future<void> _initLocation() async {
-    setState(() => _isLoading = true);
-    try {
-      final position = await _locationService.getCurrentLocation();
-      setState(() => _currentPosition = position);
-      await _loadNearbyPlaces();
-    } catch (e) {
-      setState(() {
-        _errorMessage = 'Gagal mendapatkan lokasi: ${e.toString()}';
-        _isLoading = false;
-      });
-    }
-  }
-
   String _getKeywordForFilter() {
     switch (_selectedFilter) {
       case 'Warkop':

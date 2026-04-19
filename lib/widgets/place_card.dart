@@ -116,9 +116,45 @@ class PlaceCard extends StatelessWidget {
                 ),
               ),
             ),
+
+            //chevron
+            const Padding(
+              padding: EdgeInsetsGeometry.only(right: 12),
+              child: Icon(Icons.chevron_right, color: Colors.white24, size: 20),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _statusBadge() {
+    final isOpen = place.isOpen;
+    if (isOpen == null) return const SizedBox.shrink();
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+      decoration: BoxDecoration(
+        color: isOpen
+            ? Colors.green.withOpacity(0.2)
+            : Colors.red.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Text(
+        isOpen ? 'Buka' : 'Tutup',
+        style: TextStyle(
+          color: isOpen ? Colors.green.shade400 : Colors.red.shade400,
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget _photoPlaceholder() {
+    return Container(
+      color: const Color(0xff3d1a00),
+      child: const Center(child: Text('☕', style: TextStyle(fontSize: 28))),
     );
   }
 }

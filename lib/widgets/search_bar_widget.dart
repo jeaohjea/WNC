@@ -13,3 +13,5 @@ class SearchBarWidget extends StatefulWidget {
   @override
   State<SearchBarWidget> createState() => _SearchBarWidgetState();
 }
+
+class _SearchBarWidgetState extends State<SearchBarWidget> {}

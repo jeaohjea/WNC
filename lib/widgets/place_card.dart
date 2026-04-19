@@ -128,6 +128,7 @@ class PlaceCard extends StatelessWidget {
     );
   }
 
+  // definition widget
   Widget _statusBadge() {
     final isOpen = place.isOpen;
     if (isOpen == null) return const SizedBox.shrink();

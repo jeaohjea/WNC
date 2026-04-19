@@ -11,14 +11,14 @@ class LocationService {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if(permission == LocationPermission.denied) {
+      if (permission == LocationPermission.denied) {
         throw Exception('Izin lokasi ditolak.');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       throw Exception(
-        'Izin lokasi ditolak permanen. Aktifkan di pengaturan aplikasi.'
+        'Izin lokasi ditolak permanen. Aktifkan di pengaturan aplikasi.',
       );
     }
 
@@ -32,16 +32,13 @@ class LocationService {
     return Geolocator.getPositionStream(
       locationSettings: const LocationSettings(
         accuracy: LocationAccuracy.high,
-        distanceFilter: 10
+        distanceFilter: 10,
       ),
     );
   }
 
   // hitung jarak antara dua titik (km)
-  double calculateDistance(
-    double lat1, double lng1,
-    double lat2, double lng2,
-  ) {
+  double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
     return Geolocator.distanceBetween(lat1, lng1, lat2, lng2) / 1000;
   }
 }

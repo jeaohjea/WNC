@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       String searchKeyword = keyword ?? _getKeywordForFilter();
       final places = await _placesService.searchNearby(
         latitude: _currentPosition!.latitude,
-        longtitude: _currentPosition!.longitude,
+        longitude: _currentPosition!.longitude,
         radius: _selectedRadius,
         keyword: searchKeyword,
       );
@@ -145,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       markers.add(
         Marker(
           markerId: MarkerId(place.placeId),
-          position: LatLng(place.latitude, place.longtitude),
+          position: LatLng(place.latitude, place.longitude),
           icon: BitmapDescriptor.defaultMarkerWithHue(
             place.isOpen == true
                 ? BitmapDescriptor.hueGreen
@@ -194,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       final places = await _placesService.textSearch(
         query: query,
         latitude: _currentPosition?.latitude,
-        longtitude: _currentPosition?.longitude,
+        longitude: _currentPosition?.longitude,
       );
       _updateMarkerAndList(places);
 
@@ -213,13 +213,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   LatLngBounds _getBounds(List<PlaceModel> places) {
     double minLat = places.first.latitude, maxLat = places.first.latitude;
-    double minLng = places.first.longtitude, maxLng = places.first.longtitude;
+    double minLng = places.first.longitude, maxLng = places.first.longitude;
 
     for (var p in places) {
       if (p.latitude < minLat) minLat = p.latitude;
       if (p.latitude > maxLat) maxLat = p.latitude;
-      if (p.longtitude < minLng) minLng = p.longtitude;
-      if (p.longtitude > maxLng) maxLng = p.longtitude;
+      if (p.longitude < minLng) minLng = p.longitude;
+      if (p.longitude > maxLng) maxLng = p.longitude;
     }
 
     return LatLngBounds(

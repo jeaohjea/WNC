@@ -11,18 +11,18 @@ class PlacesService {
   // cari warkop di sekitar
   Future<List<PlaceModel>> searchNearby({
     required double latitude,
-    required double longtitude,
+    required double longitude,
     int radius = 2000,
     String keyword = 'warkop cafe',
   }) async {
-    final url = Uri.parse (
+    final url = Uri.parse(
       '$_baseUrl/place/nearbysearch/json'
-      '?location=$latitude,$longtitude'
+      '?location=$latitude,$longitude'
       '&radius=$radius'
       '&type=cafe'
       '&keyword=${Uri.encodeComponent(keyword)}'
       '&language=id'
-      '&key=$_apiKey'
+      '&key=$_apiKey',
     );
 
     try {
@@ -36,7 +36,7 @@ class PlacesService {
               .toList();
 
           for (var place in places) {
-            place = _addDistance(place, latitude, longtitude);
+            place = _addDistance(place, latitude, longitude);
           }
           return places;
         }
@@ -48,19 +48,20 @@ class PlacesService {
   }
 
   // cari berdasarkan teks
-  Future<List<PlaceModel>> textSearch ({
+  Future<List<PlaceModel>> textSearch({
     required String query,
     double? latitude,
-    double? longtitude,
+    double? longitude,
   }) async {
-    String url = '$_baseUrl/place/textsearch/json'
+    String url =
+        '$_baseUrl/place/textsearch/json'
         '?query=${Uri.encodeComponent(query)}'
         '&type=cafe'
         '&language=id'
         '&key=$_apiKey';
 
-    if (latitude != null && longtitude != null) {
-      url += '&location=$latitude,$longtitude&radius=5000';
+    if (latitude != null && longitude != null) {
+      url += '&location=$latitude,$longitude&radius=5000';
     }
 
     try {
@@ -115,8 +116,10 @@ class PlacesService {
     // haversine formula sederhana
     const double earthRadius = 6371; //km
     final double dLat = _toRad(place.latitude - userLat);
-    final double dLng = _toRad(place.longtitude - userLng);
-    final double a = (dLat / 2) * (dLat / 2) + _toRad(userLat) * _toRad(place.latitude) * (dLng / 2) * (dLng / 2);
+    final double dLng = _toRad(place.longitude - userLng);
+    final double a =
+        (dLat / 2) * (dLat / 2) +
+        _toRad(userLat) * _toRad(place.latitude) * (dLng / 2) * (dLng / 2);
     final double c = 2 * (a < 1 ? a : 1);
     final double distance = earthRadius * c;
 
@@ -125,7 +128,7 @@ class PlacesService {
       name: place.name,
       address: place.address,
       latitude: place.latitude,
-      longtitude: place.longtitude,
+      longitude: place.longitude,
       rating: place.rating,
       userRatingTotal: place.userRatingTotal,
       isOpen: place.isOpen,
@@ -139,5 +142,5 @@ class PlacesService {
     );
   }
 
-  double _toRad (double deg) => deg * 3.14159265358979323846 / 180;
+  double _toRad(double deg) => deg * 3.14159265358979323846 / 180;
 }

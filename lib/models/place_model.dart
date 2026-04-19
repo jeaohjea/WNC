@@ -3,7 +3,7 @@ class PlaceModel {
   final String name;
   final String address;
   final double latitude;
-  final double longtitude;
+  final double longitude;
   final double? rating;
   final int? userRatingTotal;
   final bool? isOpen;
@@ -20,7 +20,7 @@ class PlaceModel {
     required this.name,
     required this.address,
     required this.latitude,
-    required this.longtitude,
+    required this.longitude,
     this.rating,
     this.userRatingTotal,
     this.isOpen,
@@ -31,7 +31,7 @@ class PlaceModel {
     this.distanceKm,
     this.types = const [],
     this.priceLevel,
-});
+  });
 
   factory PlaceModel.fromNearbyJson(Map<String, dynamic> json) {
     final geometry = json['geometry']['location'];
@@ -42,8 +42,10 @@ class PlaceModel {
       name: json['name'] ?? '',
       address: json['vicinity'] ?? '',
       latitude: (geometry['lat'] as num).toDouble(),
-      longtitude: (geometry['lng'] as num).toDouble(),
-      rating: json['rating'] != null ? (json['rating'] as num).toDouble() : null,
+      longitude: (geometry['lng'] as num).toDouble(),
+      rating: json['rating'] != null
+          ? (json['rating'] as num).toDouble()
+          : null,
       userRatingTotal: json['user_ratings_total'],
       isOpen: openingHoursData != null ? openingHoursData['open_now'] : null,
       types: List<String>.from(json['types'] ?? []),
@@ -75,8 +77,10 @@ class PlaceModel {
       name: json['name'] ?? '',
       address: json['formatted_address'] ?? json['vicinity'] ?? '',
       latitude: (geometry['lat'] as num).toDouble(),
-      longtitude: (geometry['lng'] as num).toDouble(),
-      rating: json['rating'] != null ? (json['rating'] as num).toDouble() : null,
+      longitude: (geometry['lng'] as num).toDouble(),
+      rating: json['rating'] != null
+          ? (json['rating'] as num).toDouble()
+          : null,
       userRatingTotal: json['user_rating_total'],
       isOpen: openingHoursData != null ? openingHoursData['open_now'] : null,
       openingHours: hours,

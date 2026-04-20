@@ -1,11 +1,14 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wnc_finder/models/place_model.dart';
+import 'package:wnc_finder/screens/detail_screen.dart';
 import 'package:wnc_finder/services/location_service.dart';
 import 'package:wnc_finder/services/place_services.dart';
+import 'package:wnc_finder/widgets/filter_chip_row.dart';
+import 'package:wnc_finder/widgets/place_card.dart';
+import 'package:wnc_finder/widgets/search_bar_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -62,6 +65,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void dispose() {
     _panelController.dispose();
     super.dispose();
+  }
+
+  Future<void> _initLocation() async {
+    try {
+      final position = await _locationService.getCurrentLocation();
+      setState(() => _currentPosition = position);
+      await _loadNearbyPlaces();
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+        _errorMessage = e.toString();
+      });
+    }
   }
 
   Future<void> _loadNearbyPlaces({String? keyword}) async {
